@@ -1,4 +1,6 @@
 #include <stdio.h>
+
+
 /**
  * main - Prints first 50 Fibonacci numbers, starting with 1 and 2,
  *    separated by a comma followed by a space.
@@ -21,7 +23,7 @@ int main(void)
 		if (count == 49)
 			printf("\n");
 		else
-			printf("\n");
+			printf(", ");
 	}
 
 	return (0);
