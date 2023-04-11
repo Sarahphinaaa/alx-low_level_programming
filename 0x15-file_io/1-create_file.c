@@ -1,33 +1,51 @@
 #include "main.h"
+#include <stddef.h>
 
 /**
- * create_file - Creates a file.
- * @filename: A pointer to the name of the file to create.
- * @text_content: A pointer to a string to write to the file.
+ * _strlen - counts string length
+ * @str: string to be used
  *
- * Return: If it fails - -1.
- * Otherwise - 1.
+ * Return: length of the string
+ */
+int _strlen(char *str)
+{
+	int len = 0;
+
+	while (str[len] != '\0')
+		len++;
+	return (len);
+}
+
+/**
+ * create_file - creates a file
+ * @filename: name of the file
+ * @text_content: content of the file to be created
+ *
+ * Return: 1 on success, -1 otherwise
  */
 int create_file(const char *filename, char *text_content)
 {
-	int s, c, len = 0
+	int file, wrote;
 
-		if (filename == NULL)
+	if (filename == NULL)
 		return (-1);
-
+	file = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (file == -1)
+		return (-1);
 	if (text_content != NULL)
 	{
-		for (len = 0; text_content[len];)
-			len++;
+		wrote = write(file, text_content, _strlen(text_content));
+		if (wrote == -1)
+		{
+			close(file);
+			return (-1);
+		}
+		close(file);
+		return (1);
 	}
-
-	s = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0600);
-	c = write(o, text_content, len);
-
-	if (s == -1 || c == -1)
-		return (-1);
-
-	close(o);
-
-	return (1);
+	else
+	{
+		close(file);
+		return (1);
+	}
 }
